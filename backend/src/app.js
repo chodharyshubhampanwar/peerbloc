@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRoutes from "./routes/userRoutes.js";
 import { errorHandler } from "./middleware/errorHandler.js";
+import fastifyCors from "@fastify/cors";
 
 dotenv.config();
 
@@ -14,6 +15,10 @@ const fastify = Fastify({
 
 fastify.register(fastifyCookie);
 fastify.register(fastifyHelmet);
+fastify.register(fastifyCors, {
+  origin: "http://localhost:5173",
+  credentials: true,
+});
 
 mongoose
   .connect(process.env.MONGODB_URI)
